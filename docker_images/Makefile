@@ -1,5 +1,5 @@
 docker-build:
-	docker network create foo
+	docker network create foo || echo "Network already exists"
 	docker build --file Dockerfile --tag ros:kinect .
 
 docker-roscore-run:
