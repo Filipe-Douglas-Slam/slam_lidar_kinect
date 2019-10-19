@@ -74,6 +74,14 @@ RUN cd ~/catkin_ws/ && \
 RUN /bin/bash -c "source /opt/ros/kinetic/setup.bash" && \
     echo "source ~/catkin_ws/devel/setup.bash" >> ~/.bashrc
 
+RUN mkdir -p ~/.gazebo/models/
+
+COPY files/kinect.zip ~/.gazebo/models/
+
+RUN cd /~/.gazebo/models/ && unzip kinect.zip && rm /~/.gazebo/models/kinect.zip
+
+
+
 
     
 

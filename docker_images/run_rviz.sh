@@ -5,5 +5,5 @@ docker run -it --rm \
                --name rviz \
                --env ROS_HOSTNAME=rviz \
                --env ROS_MASTER_URI=http://master:11311/ \
-               kinect \
+               ros:kinect \
 	       rosrun rviz rviz

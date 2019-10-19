@@ -1,3 +1,4 @@
+xhost +local:docker
 docker run -it --rm \
                -e DISPLAY \
                -e QT_X11_NO_MITSHM=1 \
@@ -6,4 +7,4 @@ docker run -it --rm \
                --name env \
                --env ROS_HOSTNAME=env \
                --env ROS_MASTER_URI=http://master:11311/ \
-               kinect 
+               ros:kinect 
