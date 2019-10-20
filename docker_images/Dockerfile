@@ -80,18 +80,3 @@ RUN apt-get update -y && \
     apt-file update -y && \
     apt-get install vim -y
 
-
-
-
-    
-
-
-
-
-
-
-
-
-
-
-
