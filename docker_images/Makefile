@@ -8,8 +8,10 @@ ROS_MATER_HTTP := --env ROS_MASTER_URI=http://master:11311/
 DOCKER_TAG := ros:kinect
 
 docker-build:
+	cd files && zip -r catkin_ws.zip catkin_ws/ && cd ..
 	docker network create foo || echo "Network already exists"
 	docker build --file Dockerfile --tag $(DOCKER_TAG) .
+	rm files/catkin_ws.zip
 
 docker-roscore-run:
 	docker run -it --rm \
@@ -33,13 +35,13 @@ docker-ros-env:
 	xhost +local:docker
 	docker run -it --rm \
                $(DOCKER-PARAMS) \
-               --name env_`uuidgen` \
-               --env ROS_HOSTNAME=env_`uuidgen` \
+               --name env \
+               --env ROS_HOSTNAME=env \
                $(ROS_MATER_HTTP) \
                $(DOCKER_TAG) 
 
 docker-gazebo-run:
-	xhost +local:root & \
+	xhost +local:docker & \
 	docker run -it --rm \
                $(DOCKER-PARAMS) \
                --name gazebo_dock \
