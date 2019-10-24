@@ -23,13 +23,14 @@ docker-roscore-run:
 
 docker-rviz-run:
 	xhost +local:docker
-	docker run -it --rm \
+	docker run --rm \
                $(DOCKER-PARAMS) \
                --name rviz \
                --env ROS_HOSTNAME=rviz \
                $(ROS_MATER_HTTP)\
                $(DOCKER_TAG) \
-	       rosrun rviz rviz
+               rosrun rviz rviz
+
 
 docker-ros-env:
 	xhost +local:docker
@@ -49,3 +50,13 @@ docker-gazebo-run:
                $(ROS_MATER_HTTP) \
                $(DOCKER_TAG) \
                rosrun gazebo_ros gazebo
+
+docker-keyboard-run:
+	xhost +local:docker & \
+	docker run -it --rm \
+               $(DOCKER-PARAMS) \
+               --name keyboard \
+               --env ROS_HOSTNAME=keyboard \
+               $(ROS_MATER_HTTP) \
+               $(DOCKER_TAG) \
+               rosrun teleop_twist_keyboard teleop_twist_keyboard.py

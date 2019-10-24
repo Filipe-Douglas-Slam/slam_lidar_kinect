@@ -82,7 +82,9 @@ RUN apt-get update -y && \
 
 #Get local catkin packages
 RUN apt-get update -y && \
-    apt-get install ros-kinetic-openni-launch -y
+    apt-get install ros-kinetic-openni-launch -y && \
+    apt-get install ros-kinetic-teleop-twist-keyboard -y
+
 ADD files/catkin_ws.zip /root/
 RUN cd /root/ && \
     unzip catkin_ws.zip && \
