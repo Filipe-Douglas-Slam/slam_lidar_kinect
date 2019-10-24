@@ -81,11 +81,12 @@ RUN apt-get update -y && \
     apt-get install vim -y
 
 #Get local catkin packages
+RUN apt-get update -y && \
+    apt-get install ros-kinetic-openni-launch -y
 ADD files/catkin_ws.zip /root/
 RUN cd /root/ && \
     unzip catkin_ws.zip && \
     rm catkin_ws.zip && \
     cd catkin_ws/src && \
     catkin_create_pkg m2wr_description rospy && \
-    cd /root/catkin_ws/ && \
     /bin/bash -c ". /opt/ros/kinetic/setup.bash; cd ~/catkin_ws/; catkin_make"
