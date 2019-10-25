@@ -92,3 +92,4 @@ RUN cd /root/ && \
     cd catkin_ws/src && \
     catkin_create_pkg m2wr_description rospy && \
     /bin/bash -c ". /opt/ros/kinetic/setup.bash; cd ~/catkin_ws/; catkin_make"
+    

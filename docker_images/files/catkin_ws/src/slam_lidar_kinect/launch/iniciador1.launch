@@ -1,0 +1,9 @@
+<launch>
+  <node pkg="urg_node" type="urg_node" name="urg_node1" args="scan:=scan1" output="screen">
+    <param name="ip_address" value="192.168.0.10"/>
+    <param name="frame_id" value="/laser1"/>
+  </node>
+  <node pkg="tf" type="static_transform_publisher" name="laser1_2_map" args="0 0 0 0 0 0 laser1 map 100"/>
+  <node pkg="rviz" type="rviz" name="rviz"
+    args="-d $(find init_laser)/launch/iniciador_cinfig_1.rviz"/>
+</launch>

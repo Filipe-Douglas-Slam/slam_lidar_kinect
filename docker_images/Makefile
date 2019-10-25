@@ -32,14 +32,23 @@ docker-rviz-run:
                rosrun rviz rviz
 
 
-docker-ros-env:
+docker-ros-env1:
 	xhost +local:docker
 	docker run -it --rm \
                $(DOCKER-PARAMS) \
-               --name env \
-               --env ROS_HOSTNAME=env \
+               --name env1 \
+               --env ROS_HOSTNAME=env1 \
                $(ROS_MATER_HTTP) \
                $(DOCKER_TAG) 
+
+docker-ros-env2:
+	xhost +local:docker
+	docker run -it --rm \
+               $(DOCKER-PARAMS) \
+               --name env2 \
+               --env ROS_HOSTNAME=env2 \
+               $(ROS_MATER_HTTP) \
+               $(DOCKER_TAG)
 
 docker-gazebo-run:
 	xhost +local:docker & \
