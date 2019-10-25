@@ -7,6 +7,8 @@ ROS_MATER_HTTP := --env ROS_MASTER_URI=http://master:11311/
 
 DOCKER_TAG := ros:kinect
 
+RANDOM := $(shell bash -c 'echo $$RANDOM')
+
 docker-build:
 	cd files && zip -r catkin_ws.zip catkin_ws/ && cd ..
 	docker network create foo || echo "Network already exists"
@@ -31,24 +33,14 @@ docker-rviz-run:
                $(DOCKER_TAG) \
                rosrun rviz rviz
 
-
-docker-ros-env1:
+docker-ros-env:
 	xhost +local:docker
 	docker run -it --rm \
                $(DOCKER-PARAMS) \
-               --name env1 \
-               --env ROS_HOSTNAME=env1 \
+               --name env_$(RANDOM) \
+               --env ROS_HOSTNAME=env_$(RANDOM) \
                $(ROS_MATER_HTTP) \
                $(DOCKER_TAG) 
-
-docker-ros-env2:
-	xhost +local:docker
-	docker run -it --rm \
-               $(DOCKER-PARAMS) \
-               --name env2 \
-               --env ROS_HOSTNAME=env2 \
-               $(ROS_MATER_HTTP) \
-               $(DOCKER_TAG)
 
 docker-gazebo-run:
 	xhost +local:docker & \
