@@ -53,6 +53,9 @@ RUN echo "source ~/catkin_ws/devel/setup.bash" >> ~/.bashrc
 #Kinetic is using the gazebo 7.x series, start by installing it
 RUN apt-get install -y libgazebo7-dev
 
+#Installation of hokuyo-node and urg-node
+RUN apt-get install -y ros-kinetic-urg-node
+
 #Download the source code from the gazebo_ros_pkgs github repository
 RUN cd ~/catkin_ws/src && \
 git clone https://github.com/ros-simulation/gazebo_ros_pkgs.git -b kinetic-devel

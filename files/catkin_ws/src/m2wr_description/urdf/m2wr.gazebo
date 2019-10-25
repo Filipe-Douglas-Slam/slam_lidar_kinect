@@ -27,50 +27,31 @@
     </plugin>
   </gazebo>
 
-  <gazebo reference="sensor_laser">
-    <sensor type="depth" name="kinect2">
-      <pose>0 0 0 0 0 0</pose>
-      <always_on>true</always_on>
-      <visualize>true</visualize>
-      <camera>
-          <horizontal_fov>1.047</horizontal_fov>
-          <image>
-              <width>640</width>
-              <height>480</height>
-              <format>R8G8B8</format>
-          </image>
-          <depth_camera>
+  <gazebo reference="laser">
+    <sensor:ray name="laser">
+      <rayCount>180</rayCount>
+      <rangeCount>180</rangeCount>
+      <laserCount>1</laserCount>
 
-          </depth_camera>
-          <clip>
-              <near>0.1</near>
-              <far>100</far>
-          </clip>
-      </camera>
-      <plugin name="camera_controller" filename="libgazebo_ros_openni_kinect.so">
-          <baseline>0.2</baseline>
-          <alwaysOn>true</alwaysOn>
-              <updateRate>10.0</updateRate>
-              <cameraName>kinect2</cameraName>
-              <frameName>sensor_laser</frameName>
-          <imageTopicName>rgb/image_raw</imageTopicName>
-          <depthImageTopicName>depth/image_raw</depthImageTopicName>
-          <pointCloudTopicName>depth/points</pointCloudTopicName>
-          <cameraInfoTopicName>rgb/camera_info</cameraInfoTopicName>
-          <depthImageCameraInfoTopicName>depth/camera_info</depthImageCameraInfoTopicName>
-          <pointCloudCutoff>0.4</pointCloudCutoff>
-              <hackBaseline>0.07</hackBaseline>
-              <distortionK1>0.0</distortionK1>
-              <distortionK2>0.0</distortionK2>
-              <distortionK3>0.0</distortionK3>
-              <distortionT1>0.0</distortionT1>
-              <distortionT2>0.0</distortionT2>
-          <CyPrime>0.0</CyPrime>
-          <Cy>0.0</Cy>
-          <Cz>0.0</Cz>
-          <focalLength>0.0</focalLength>
-          </plugin>
-    </sensor>
+      <origin>0.0 0.0 0.0</origin>
+      <displayRays>false</displayRays>
+
+      <minAngle>-135</minAngle>
+      <maxAngle>135</maxAngle>
+
+      <minRange>0.08</minRange>
+      <maxRange>10.0</maxRange>
+      <resRange>0.01</resRange>
+      <updateRate>20</updateRate>
+      <controller:gazebo_ros_laser name="gazebo_ros_laser_controller" plugin="libgazebo_ros_laser.so">
+    <gaussianNoise>0.005</gaussianNoise>
+    <alwaysOn>true</alwaysOn>
+    <updateRate>20</updateRate>
+    <topicName>scan</topicName>
+    <frameName>laser</frameName>
+    <interface:laser name="gazebo_ros_laser_iface" />
+      </controller:gazebo_ros_laser>
+    </sensor:ray>
   </gazebo>
 
 </robot>
