@@ -19,7 +19,7 @@ To build the docker run:
 make docker-build
 ```
 
-## Ros Instances run:
+## Ros Docker Run
 
 ### Roscore
 To run a roscore terminal run:
@@ -49,9 +49,9 @@ make docker-keyboard-run
 ### Ros Environment
 The environment is destined to run anything at the ros docker enviroment.
 
-To run a environment terminal run (put a number instead of "put_env number"):
+To run a environment terminal run:
 ```
-make docker-ros-env env_name=put_env_number
+make docker-ros-env
 ```
 
 

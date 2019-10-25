@@ -7,6 +7,8 @@ ROS_MATER_HTTP := --env ROS_MASTER_URI=http://master:11311/
 
 DOCKER_TAG := ros:kinect
 
+RANDOM := $(shell bash -c 'echo $$RANDOM')
+
 docker-build:
 	cd files && zip -r catkin_ws.zip catkin_ws/ && cd ..
 	docker network create foo || echo "Network already exists"
@@ -35,8 +37,8 @@ docker-ros-env:
 	xhost +local:docker
 	docker run -it --rm \
                $(DOCKER-PARAMS) \
-               --name env_$(env_name) \
-               --env ROS_HOSTNAME=env_$(env_name) \
+               --name env_$(RANDOM) \
+               --env ROS_HOSTNAME=env_$(RANDOM) \
                $(ROS_MATER_HTTP) \
                $(DOCKER_TAG) 
 
