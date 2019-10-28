@@ -27,7 +27,7 @@
     </plugin>
   </gazebo>
 
-  <gazebo reference="sensor_laser">
+  <gazebo reference="kinect_sensor">
     <sensor type="depth" name="kinect2">
       <pose>0 0 0 0 0 0</pose>
       <always_on>true</always_on>
@@ -52,7 +52,7 @@
           <alwaysOn>true</alwaysOn>
               <updateRate>10.0</updateRate>
               <cameraName>kinect2</cameraName>
-              <frameName>sensor_laser</frameName>
+              <frameName>kinect_sensor</frameName>
           <imageTopicName>rgb/image_raw</imageTopicName>
           <depthImageTopicName>depth/image_raw</depthImageTopicName>
           <pointCloudTopicName>depth/points</pointCloudTopicName>

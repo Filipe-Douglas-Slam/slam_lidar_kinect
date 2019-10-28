@@ -90,6 +90,6 @@ RUN cd /root/ && \
     unzip catkin_ws.zip && \
     rm catkin_ws.zip && \
     cd catkin_ws/src && \
-    catkin_create_pkg m2wr_description rospy && \
+    catkin_create_pkg one-kinect-robot rospy && \
     /bin/bash -c ". /opt/ros/kinetic/setup.bash; cd ~/catkin_ws/; catkin_make"
     
