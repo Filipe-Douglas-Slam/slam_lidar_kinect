@@ -1,9 +1,9 @@
 <?xml version="1.0" ?>
-<robot name="kinect-robot" xmlns:xacro="http://www.ros.org/wiki/xacro">
+<robot name="kinect_robot" xmlns:xacro="http://www.ros.org/wiki/xacro">
 
-  <xacro:include filename="$(find one-kinect-robot)/urdf/materials.xacro" />
-  <xacro:include filename="$(find one-kinect-robot)/urdf/kinect-robot.gazebo" />
-  <xacro:include filename="$(find one-kinect-robot)/urdf/macros.xacro" />
+  <xacro:include filename="$(find one_kinect_robot)/urdf/materials.xacro" />
+  <xacro:include filename="$(find one_kinect_robot)/urdf/kinect_robot.gazebo" />
+  <xacro:include filename="$(find one_kinect_robot)/urdf/macros.xacro" />
 
   <link name="link_chassis">
     <!-- pose and inertial -->

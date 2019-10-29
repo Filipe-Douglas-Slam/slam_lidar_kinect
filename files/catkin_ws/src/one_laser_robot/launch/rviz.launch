@@ -1,19 +1,17 @@
 <?xml version="1.0"?>
 <launch>
 
-  <param name="kinect-robot" command="$(find xacro)/xacro --inorder '$(find one-kinect-robot)/urdf/kinect-robot.xacro'"/>
+  <param name="laser_robot" command="$(find xacro)/xacro --inorder '$(find one_laser_robot)/urdf/laser_robot.xacro'"/>
   
   <!-- send fake joint values -->
   <node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher">
     <param name="use_gui" value="False"/>
   </node>
 
-  <node pkg="tf" type="static_transform_publisher" name="ime_slam_camera_tf" args="0.15 0 0.05 -1.58 0 -1.58 /link_chassis /kinect_sensor 100"/>
-
   <!-- Combine joint values -->
   <node name="robot_state_publisher" pkg="robot_state_publisher" type="state_publisher"/>
 
   <!-- Show in Rviz   -->
-  <node name="rviz" pkg="rviz" type="rviz" args="-d $(find one-kinect-robot)/launch/kinect.rviz" />
+  <node name="rviz" pkg="rviz" type="rviz" args="-d $(find one_laser_robot)/launch/laser_sensor.rviz" />
 
 </launch>
