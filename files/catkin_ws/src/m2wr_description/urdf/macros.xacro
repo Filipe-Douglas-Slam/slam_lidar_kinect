@@ -38,4 +38,5 @@
             iyy="${mass*(3*r*r+l*l)/12}" iyz = "0"
             izz="${mass*(r*r)/2}" />
     </macro>
+
 </robot>
