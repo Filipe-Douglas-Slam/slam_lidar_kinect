@@ -1,9 +1,9 @@
 <?xml version="1.0" ?>
-<robot name="laser_robot" xmlns:xacro="http://www.ros.org/wiki/xacro">
+<robot name="two_laser_robot" xmlns:xacro="http://www.ros.org/wiki/xacro">
 
-  <xacro:include filename="$(find one_laser_robot)/urdf/materials.xacro" />
-  <xacro:include filename="$(find one_laser_robot)/urdf/laser_robot.gazebo" />
-  <xacro:include filename="$(find one_laser_robot)/urdf/macros.xacro" />
+  <xacro:include filename="$(find two_laser_robot)/urdf/materials.xacro" />
+  <xacro:include filename="$(find two_laser_robot)/urdf/two_laser_robot.gazebo" />
+  <xacro:include filename="$(find two_laser_robot)/urdf/macros.xacro" />
 
   <link name="link_chassis">
     <!-- pose and inertial -->
@@ -51,7 +51,7 @@
     </visual>
   </link>
 
-  <link name="laser">
+  <link name="laser1">
     <inertial>
         <origin xyz="0 0 0" rpy="0 0 0" />
         <mass value="1" />
@@ -72,12 +72,41 @@
         <cylinder radius="0.05" length="0.1"/>
         </geometry>
     </collision>
-    </link>
+  </link>
 
-    <joint name="joint_sensor_laser" type="fixed">
-    <origin xyz="0.15 0 0.05" rpy="0 0 0"/>
+  <link name="laser2">
+    <inertial>
+        <origin xyz="0 0 0" rpy="0 0 0" />
+        <mass value="1" />
+        <xacro:cylinder_inertia mass="1" r="0.05" l="0.1" />
+    </inertial>
+
+    <visual>
+        <origin xyz="0 0 0" rpy="0 0 0" />
+        <geometry>
+        <cylinder radius="0.05" length="0.1"/>
+        </geometry>
+        <material name="white" />
+    </visual>
+
+    <collision>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <geometry>
+        <cylinder radius="0.05" length="0.1"/>
+        </geometry>
+    </collision>
+  </link>
+
+  <joint name="joint_sensor_laser1" type="fixed">
+    <origin xyz="0.15 0 0.08" rpy="0 0 0"/>
     <parent link="link_chassis"/>
-    <child link="laser"/>
+    <child link="laser1"/>
+  </joint>
+
+  <joint name="joint_sensor_laser2" type="fixed">
+    <origin xyz="-0.15 0 0.08" rpy="0 0 3.1415"/>
+    <parent link="link_chassis"/>
+    <child link="laser2"/>
   </joint>
 
   <xacro:link_wheel name="link_right_wheel" />
