@@ -7,6 +7,8 @@ ROS_MATER_HTTP := --env ROS_MASTER_URI=http://master:11311/
 
 DOCKER_TAG := ros:kinect
 
+DOCKER_NAME = "default"
+
 RANDOM := $(shell bash -c 'echo $$RANDOM')
 
 docker-build:
@@ -61,3 +63,7 @@ docker-keyboard-run:
                $(ROS_MATER_HTTP) \
                $(DOCKER_TAG) \
                rosrun teleop_twist_keyboard teleop_twist_keyboard.py
+
+docker-pull-catkin_ws:
+    docker cp files/ $(DOCKER_NAME):/root/ 
+
