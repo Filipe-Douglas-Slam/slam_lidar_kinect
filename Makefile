@@ -12,10 +12,8 @@ DOCKER_NAME = "default"
 RANDOM := $(shell bash -c 'echo $$RANDOM')
 
 docker-build:
-	cd files && zip -r catkin_ws.zip catkin_ws/ && cd ..
 	docker network create foo || echo "Network already exists"
 	docker build --file Dockerfile --tag $(DOCKER_TAG) .
-	rm files/catkin_ws.zip
 
 docker-roscore-run:
 	docker run -it --rm \
