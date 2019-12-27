@@ -11,6 +11,8 @@ DOCKER_NAME = "default"
 
 RANDOM := $(shell bash -c 'echo $$RANDOM')
 
+DOCKER_COMMAND:= ""
+
 docker-build:
 	docker network create foo || echo "Network already exists"
 	docker build --file Dockerfile --tag $(DOCKER_TAG) .
@@ -33,6 +35,16 @@ docker-rviz-run:
                $(DOCKER_TAG) \
                rosrun rviz rviz
 
+docker-spawn-one-kinect:
+	xhost +local:docker
+	docker run --rm \
+               $(DOCKER-PARAMS) \
+               --name spawn \
+               --env ROS_HOSTNAME=spawn \
+               $(ROS_MATER_HTTP)\
+               $(DOCKER_TAG) \
+               xterm -e "source /root/catkin_ws/devel/setup.bash && roslaunch one_kinect_robot spawn.launch"
+
 docker-ros-env:
 	xhost +local:docker
 	docker run -it --rm \
@@ -40,7 +52,9 @@ docker-ros-env:
                --name env_$(RANDOM) \
                --env ROS_HOSTNAME=env_$(RANDOM) \
                $(ROS_MATER_HTTP) \
-               $(DOCKER_TAG) 
+               $(DOCKER_TAG) \
+               xterm -e "source /root/catkin_ws/devel/setup.bash && $(DOCKER_COMMAND)"
+
 
 docker-gazebo-run:
 	xhost +local:docker & \
@@ -50,7 +64,7 @@ docker-gazebo-run:
                --env ROS_HOSTNAME=gazebo_dock \
                $(ROS_MATER_HTTP) \
                $(DOCKER_TAG) \
-               rosrun gazebo_ros gazebo
+               roslaunch --wait gazebo_ros willowgarage_world.launch pause:=false
 
 docker-keyboard-run:
 	xhost +local:docker & \
@@ -64,4 +78,7 @@ docker-keyboard-run:
 
 docker-pull-catkin_ws:
     docker cp files/ $(DOCKER_NAME):/root/ 
+
+docker-kill-all:
+    docker kill $(docker ps -q)
 
