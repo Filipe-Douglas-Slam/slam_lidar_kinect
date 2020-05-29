@@ -1,0 +1,8 @@
+prefix=/root/catkin_ws/install
+
+Name: ira_laser_tools
+Description: Description of ira_laser_tools
+Version: 1.0.2
+Cflags: -I${prefix}/include
+Libs: -L${prefix}/lib 
+Requires: 

@@ -7,23 +7,25 @@ ROS_MATER_HTTP := --env ROS_MASTER_URI=http://master:11311/
 
 DOCKER_TAG := ros:kinect
 
-DOCKER_NAME = "default"
-
-RANDOM := $(shell bash -c 'echo $$RANDOM')
+DOCKER_NAME = "master"
 
 docker-build:
-	cd files && zip -r catkin_ws.zip catkin_ws/ && cd ..
 	docker network create foo || echo "Network already exists"
 	docker build --file Dockerfile --tag $(DOCKER_TAG) .
-	rm files/catkin_ws.zip
 
 docker-roscore-run:
-	docker run -it --rm \
+	xhost +local:docker
+	docker run -it --rm -d \
                $(DOCKER-PARAMS) \
                --name master \
                --env ROST_NAME=master \
                $(DOCKER_TAG) \
-               roscore
+               roscore && \
+    make docker-gazebo-run && \
+    sleep 10 && \
+    make map_spawn && \
+    sleep 10 && \
+    make docker-spawn-megazord
 
 docker-rviz-run:
 	xhost +local:docker
@@ -35,34 +37,30 @@ docker-rviz-run:
                $(DOCKER_TAG) \
                rosrun rviz rviz
 
+docker-spawn-one-kinect:
+	docker exec -it -d master /bin/bash -c "source /root/catkin_ws/devel/setup.bash && roslaunch one_kinect_robot spawn.launch"
+
+docker-spawn-megazord:
+	docker exec -it -d master /bin/bash -c "source /root/catkin_ws/devel/setup.bash && roslaunch two_laser_one_kinect_robot spawn.launch"
+
+
 docker-ros-env:
-	xhost +local:docker
-	docker run -it --rm \
-               $(DOCKER-PARAMS) \
-               --name env_$(RANDOM) \
-               --env ROS_HOSTNAME=env_$(RANDOM) \
-               $(ROS_MATER_HTTP) \
-               $(DOCKER_TAG) 
+	docker exec -it master /bin/bash
+
+map_spawn:
+	docker exec -it -d master /bin/bash -c "source /root/catkin_ws/devel/setup.bash && roslaunch world_env spawn.launch"
 
 docker-gazebo-run:
-	xhost +local:docker & \
-	docker run -it --rm \
-               $(DOCKER-PARAMS) \
-               --name gazebo_dock \
-               --env ROS_HOSTNAME=gazebo_dock \
-               $(ROS_MATER_HTTP) \
-               $(DOCKER_TAG) \
-               rosrun gazebo_ros gazebo
+	docker exec -it -d master /bin/bash -c "source /opt/ros/kinetic/setup.bash && roslaunch --wait gazebo_ros empty_world.launch pause:=false"
 
 docker-keyboard-run:
-	xhost +local:docker & \
-	docker run -it --rm \
-               $(DOCKER-PARAMS) \
-               --name keyboard \
-               --env ROS_HOSTNAME=keyboard \
-               $(ROS_MATER_HTTP) \
-               $(DOCKER_TAG) \
-               rosrun teleop_twist_keyboard teleop_twist_keyboard.py
+	docker exec -it master /bin/bash -c "source /opt/ros/kinetic/setup.bash && rosrun teleop_twist_keyboard teleop_twist_keyboard.py"
+
+rtab-map-launch:
+	docker exec -it master /bin/bash -c "source /opt/ros/kinetic/setup.bash && roslaunch one_kinect_robot fodazi.launch"
+
+rtab-map-launch-megazord:
+	docker exec -it master /bin/bash -c "source /opt/ros/kinetic/setup.bash && roslaunch two_laser_one_kinect_robot nastinha.launch"
 
 docker-pull-catkin_ws:
     docker cp files/ $(DOCKER_NAME):/root/ 

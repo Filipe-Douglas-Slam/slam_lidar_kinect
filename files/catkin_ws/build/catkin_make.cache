@@ -1,0 +1,2 @@
+gazebo_ros_pkgs/gazebo_dev:gazebo_ros_pkgs/gazebo_msgs:gazebo_ros_pkgs/gazebo_plugins:gazebo_ros_pkgs/gazebo_ros:gazebo_ros_pkgs/gazebo_ros_control:gazebo_ros_pkgs/gazebo_ros_pkgs:iai_kinect2/iai_kinect2:iai_kinect2/kinect2_bridge:iai_kinect2/kinect2_calibration:iai_kinect2/kinect2_registration:iai_kinect2/kinect2_viewer:ira_laser_tools:one_kinect_robot:two_laser_one_kinect_robot:world_env
+-DCATKIN_DEVEL_PREFIX=/root/catkin_ws/devel -DCMAKE_INSTALL_PREFIX=/root/catkin_ws/install -G Unix Makefiles
