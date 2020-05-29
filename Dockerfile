@@ -80,18 +80,18 @@ RUN apt-get update -y && \
     apt-file update -y && \
     apt-get install vim -y
 
-#Get local catkin packages
+#Install some packages
 RUN apt-get update -y && \
     apt-get install ros-kinetic-openni-launch -y && \
-    apt-get install ros-kinetic-teleop-twist-keyboard -y
+    apt-get install ros-kinetic-teleop-twist-keyboard -y && \
+    apt-get install ros-kinetic-pointcloud-to-laserscan -y && \
+    apt-get install ros-kinetic-slam-gmapping -y && \
+    apt-get install ros-kinetic-rtabmap-ros -y  && \
+    apt-get install mercurial -y
+#Download Gazebo Files
+RUN mkdir -p ~/.gazebo && \
+    hg clone https://bitbucket.org/osrf/gazebo_models ~/.gazebo/models
 
-ADD files/catkin_ws.zip /root/
-RUN cd /root/ && \
-    unzip catkin_ws.zip && \
-    rm catkin_ws.zip && \
-    cd catkin_ws/src && \
-    catkin_create_pkg one_kinect_robot rospy && \
-    catkin_create_pkg one_laser_robot rospy && \
-    catkin_create_pkg two_laser_robot rospy && \
-    /bin/bash -c ". /opt/ros/kinetic/setup.bash; cd ~/catkin_ws/; catkin_make"
+#Get local catkin packages
+COPY files/ /root/
     

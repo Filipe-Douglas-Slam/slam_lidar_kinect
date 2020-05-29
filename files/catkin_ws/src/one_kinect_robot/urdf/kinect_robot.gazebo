@@ -21,8 +21,8 @@
       <wheelDiameter>0.2</wheelDiameter>
       <torque>0.1</torque>
       <commandTopic>cmd_vel</commandTopic>
-      <odometryTopic>odom</odometryTopic>
-      <odometryFrame>odom</odometryFrame>
+      <odometryTopic>odom_topic_robot</odometryTopic>
+      <odometryFrame>odom_frame_robot</odometryFrame>
       <robotBaseFrame>link_chassis</robotBaseFrame>
     </plugin>
   </gazebo>
@@ -43,14 +43,14 @@
 
           </depth_camera>
           <clip>
-              <near>0.1</near>
-              <far>100</far>
+              <near>0.001</near>
+              <far>100000000</far>
           </clip>
       </camera>
       <plugin name="camera_controller" filename="libgazebo_ros_openni_kinect.so">
           <baseline>0.2</baseline>
           <alwaysOn>true</alwaysOn>
-              <updateRate>10.0</updateRate>
+              <updateRate>100.0</updateRate>
               <cameraName>kinect2</cameraName>
               <frameName>kinect_sensor</frameName>
           <imageTopicName>rgb/image_raw</imageTopicName>
